@@ -17,6 +17,18 @@
               500: "#536AFF",
               600: "#3D53FF",
             },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
             secondary: "#419D78",
             accent: "#E0A458",
             neutral: "#2D3047",
@@ -411,6 +423,158 @@
       input:checked + .slider:before {
       transform: translateX(26px);
       }
+	/* ---------- Buttons ---------- */
+.btn-primary{
+  @apply cta-button bg-primary hover:bg-primary/80 text-white
+          py-4 px-8 text-lg font-medium rounded-full whitespace-nowrap;
+}
+
+/* ---------- Project cards ---------- */
+      .project-card {
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      }
+      .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(224, 164, 88, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      }
+      .project-card .overlay {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(10, 10, 10, 0.9) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      }
+      .project-card:hover .overlay {
+      opacity: 1;
+      }
+      .project-card .view-details {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      }
+      .project-card:hover .view-details {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      }
+      .filter-chip {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      }
+      .filter-chip.active {
+      background: #E0A458;
+      border-color: #E0A458;
+      color: #000;
+      }
+      .filter-chip:hover {
+      background: rgba(224, 164, 88, 0.2);
+      border-color: rgba(224, 164, 88, 0.5);
+      }
+      .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      }
+      .modal.active {
+      opacity: 1;
+      visibility: visible;
+      }
+      .modal-content {
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      }
+      .modal.active .modal-content {
+      transform: scale(1);
+      }
+      .tech-tag {
+      background: rgba(224, 164, 88, 0.2);
+      border: 1px solid rgba(224, 164, 88, 0.3);
+      color: #E0A458;
+      }
+      .category-tag {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      }
+      .category-web { background: rgba(65, 157, 120, 0.2); color: #419D78; }
+      .category-app { background: rgba(224, 164, 88, 0.2); color: #E0A458; }
+      .category-branding { background: rgba(45, 48, 71, 0.2); color: #8B9DC3; }
+      .category-ui { background: rgba(139, 50, 50, 0.2); color: #FF6B6B; }
+      @keyframes fadeInUp {
+      from {
+      opacity: 0;
+      transform: translateY(30px);
+      }
+      to {
+      opacity: 1;
+      transform: translateY(0);
+      }
+      }
+      .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+      }
+      .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      }
+      @media (max-width: 768px) {
+      .project-grid {
+      grid-template-columns: 1fr;
+      }
+      }
+      .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      }
+      .gallery-image {
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      }
+      .gallery-image:hover {
+      transform: scale(1.05);
+      }
+
+.project-card .category-tag,
+.project-card .view-details{ z-index: 2; }
     </style>
   </head>
   <body>
@@ -434,7 +598,7 @@
               >Home</a
             >
             <a
-              href="#projekt"
+              href="#projects"
               class="text-white hover:text-accent transition-colors"
               >Projekt</a
             >
@@ -477,19 +641,16 @@
               code.
             </p>
             <div class="flex space-x-6">
-              <a
-                href="https://readdy.ai/home/7cb6d227-46cf-4a94-b428-27d537b5d2bc/4d81e87e-d210-4677-8dc3-ed44a5e86d9a"
-                data-readdy="true"
-              >
-                <button
-                  class="cta-button bg-accent hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
-                >
-                  View Projects
+              
+                              <button
+                                class="cta-button bg-accent hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
+                              >
+                  <a href="#projects" class="btn-primary">View Projects</a>
                 </button>
-              </a>
-              <button
-                class="cta-button border-2 border-white hover:bg-white hover:text-black transition-colors text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
-              >
+<button
+                                class="cta-button bg-accent hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
+                              >
+
                 Contact Me
               </button>
             </div>
@@ -498,107 +659,788 @@
       </div>
     </section>
 <!-- ===== Biomes Section 改造为 Projects Section ===== -->
-<section id="biomes" class="relative w-full min-h-screen flex flex-col lg:flex-row">
-
-  <!-- 左侧说明栏（保持 sticky） -->
-  <aside class="biomes-info lg:w-1/3 px-8 lg:px-12 py-16 lg:py-24">
-    <h2 class="text-4xl font-bold tracking-wide mb-4">
-      Featured&nbsp;Projects
-    </h2>
-    <p class="leading-relaxed opacity-80">
-      A selection of my recent design &amp; development work.  
-      Hover a card to see more details, or click the button below each
-      image to open the full case study.
-    </p>
-  </aside>
-
-  <!-- 右侧卡片容器 -->
-  <div class="biomes-gallery lg:w-2/3 grid gap-10 px-8 lg:px-0 py-16 lg:py-24
-              grid-cols-1 sm:grid-cols-2">
-              
-    <!-- === Project Card 1 === -->
-    <article class="biome-card group overflow-hidden rounded-3xl backdrop-blur
-                     bg-white/5 border border-white/10 hover:-translate-y-2
-                     transition-all duration-300">
-      <!-- 项目封面 -->
-      <img src="assets/projects/weathernow-cover.jpg"
-           alt="WeatherNow app screenshot"
-           class="w-full h-60 object-cover" />
-      <!-- 文本区 -->
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2 tracking-wide">
-          Weather<span class="text-primary">Now</span>
-        </h3>
-        <p class="text-sm leading-relaxed opacity-75 mb-4">
-          A real-time weather dashboard built with<br>
-          React, Tailwind CSS and the OpenWeather API.
-        </p>
-
-        <!-- Tech Stack 徽章 (沿用原 badge 位置) -->
-        <div class="flex flex-wrap gap-2">
-          <span class="inline-block px-3 py-1 rounded-full text-xs
-                       bg-primary/20 text-primary tracking-wide">
-            React
-          </span>
-          <span class="inline-block px-3 py-1 rounded-full text-xs
-                       bg-primary/20 text-primary tracking-wide">
-            Tailwind
-          </span>
-          <span class="inline-block px-3 py-1 rounded-full text-xs
-                       bg-primary/20 text-primary tracking-wide">
-            API
-          </span>
+  <!-- ===== Projects Section (原 Biomes) ===== -->
+    <section class="min-h-screen pt-32 pb-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 fade-in-up">
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+            My Projects
+          </h1>
+          <p class="text-xl md:text-2xl max-w-3xl mx-auto text-gray-300">
+            A showcase of creative design and development work spanning web
+            design, mobile applications, branding, and user experience projects.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 mb-12 fade-in-up">
+          <button
+            class="filter-chip active px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap !rounded-button"
+            data-filter="all"
+          >
+            All Projects
+          </button>
+          <button
+            class="filter-chip px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap !rounded-button"
+            data-filter="web"
+          >
+            Web Design
+          </button>
+          <button
+            class="filter-chip px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap !rounded-button"
+            data-filter="app"
+          >
+            App Development
+          </button>
+          <button
+            class="filter-chip px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap !rounded-button"
+            data-filter="branding"
+          >
+            Branding
+          </button>
+          <button
+            class="filter-chip px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap !rounded-button"
+            data-filter="ui"
+          >
+            UI/UX
+          </button>
+        </div>
+        <div class="project-grid fade-in-up">
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="web"
+            data-project="ecommerce"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=modern%20ecommerce%20website%20design%20with%20clean%20layout%2C%20product%20showcase%2C%20shopping%20cart%20interface%2C%20minimalist%20design%2C%20professional%20photography%2C%20high%20quality%20web%20design&width=600&height=400&seq=proj001&orientation=landscape"
+                alt="E-commerce Platform"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="category-tag category-web px-3 py-1 rounded-full">
+                Web Design
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">E-commerce Platform</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                A modern, responsive e-commerce solution with advanced
+                filtering, seamless checkout process, and intuitive user
+                experience designed for maximum conversions.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >React</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Node.js</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Stripe</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="app"
+            data-project="fitness"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=mobile%20fitness%20app%20interface%20design%20showing%20workout%20tracking%2C%20progress%20charts%2C%20modern%20UI%20elements%2C%20clean%20mobile%20app%20design%2C%20health%20and%20fitness%20theme&width=600&height=400&seq=proj002&orientation=landscape"
+                alt="Fitness Tracking App"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="category-tag category-app px-3 py-1 rounded-full">
+                App Development
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Fitness Tracking App</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Cross-platform mobile application for tracking workouts,
+                nutrition, and progress with social features and personalized
+                coaching recommendations.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >React Native</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Firebase</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Redux</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="branding"
+            data-project="restaurant"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=restaurant%20branding%20design%20with%20logo%2C%20menu%20design%2C%20business%20cards%2C%20elegant%20typography%2C%20food%20industry%20branding%2C%20professional%20brand%20identity%20design&width=600&height=400&seq=proj003&orientation=landscape"
+                alt="Restaurant Brand Identity"
+                class="w-full h-full object-cover object-top"
+              />
+              <div
+                class="category-tag category-branding px-3 py-1 rounded-full"
+              >
+                Branding
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Restaurant Brand Identity</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Complete brand identity design for upscale dining establishment
+                including logo, menu design, signage, and marketing materials.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Illustrator</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Photoshop</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >InDesign</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="ui"
+            data-project="dashboard"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=modern%20dashboard%20UI%20design%20with%20data%20visualization%2C%20charts%2C%20graphs%2C%20clean%20interface%2C%20dark%20theme%2C%20professional%20admin%20panel%20design&width=600&height=400&seq=proj004&orientation=landscape"
+                alt="Analytics Dashboard"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="category-tag category-ui px-3 py-1 rounded-full">
+                UI/UX
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Analytics Dashboard</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Comprehensive data visualization dashboard with real-time
+                analytics, customizable widgets, and intuitive user interface
+                design.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Figma</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >D3.js</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Vue.js</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="web"
+            data-project="portfolio"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=creative%20portfolio%20website%20design%20with%20artistic%20layout%2C%20image%20galleries%2C%20modern%20typography%2C%20creative%20industry%20web%20design%2C%20professional%20showcase&width=600&height=400&seq=proj005&orientation=landscape"
+                alt="Creative Portfolio"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="category-tag category-web px-3 py-1 rounded-full">
+                Web Design
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Creative Portfolio</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Interactive portfolio website for digital artist featuring
+                dynamic galleries, smooth animations, and immersive user
+                experience.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >GSAP</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Three.js</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Webflow</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card rounded-xl overflow-hidden cursor-pointer"
+            data-category="app"
+            data-project="travel"
+          >
+            <div class="aspect-video relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=travel%20planning%20mobile%20app%20interface%20with%20maps%2C%20booking%20features%2C%20destination%20photos%2C%20modern%20mobile%20UI%20design%2C%20travel%20and%20tourism%20app&width=600&height=400&seq=proj006&orientation=landscape"
+                alt="Travel Planning App"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="category-tag category-app px-3 py-1 rounded-full">
+                App Development
+              </div>
+              <div class="overlay"></div>
+              <button
+                class="view-details bg-accent hover:bg-opacity-90 text-black py-3 px-6 font-medium !rounded-button whitespace-nowrap"
+              >
+                View Details
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Travel Planning App</h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Comprehensive travel companion app with itinerary planning,
+                local recommendations, offline maps, and social sharing
+                features.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Flutter</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >Google Maps</span
+                >
+                <span class="tech-tag px-3 py-1 rounded-full text-xs"
+                  >SQLite</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-16">
+          <a
+            href="https://readdy.ai/home/7cb6d227-46cf-4a94-b428-27d537b5d2bc/c3e37c20-fff9-4258-a561-d8cea2f010e4"
+            data-readdy="true"
+            class="bg-primary hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap inline-block"
+          >
+            <div
+              class="w-5 h-5 flex items-center justify-center inline-block mr-2"
+            >
+              <i class="ri-arrow-left-line"></i>
+            </div>
+            Back to Home
+          </a>
         </div>
       </div>
-    </article>
+    </section>
 
-    <!-- === Project Card 2 === -->
-    <article class="biome-card group ...">
-      <img src="assets/projects/brandverse-cover.jpg"
-           alt="BrandVerse identity system mockup"
-           class="w-full h-60 object-cover" />
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2 tracking-wide">
-          Brand<span class="text-accent">Verse</span>
-        </h3>
-        <p class="text-sm leading-relaxed opacity-75 mb-4">
-          A holistic branding package—logo, typography,<br>
-          motion guidelines—crafted for a Web3 startup.
-        </p>
 
-        <div class="flex flex-wrap gap-2">
-          <span class="badge">Illustrator</span>
-          <span class="badge">After Effects</span>
-          <span class="badge">Figma</span>
+
+    <div class="modal" id="projectModal">
+      <div class="modal-content p-8 m-4 w-full max-w-4xl">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold" id="modalTitle">Project Title</h2>
+          <button
+            class="text-gray-400 hover:text-white transition-colors"
+            id="closeModal"
+          >
+            <div class="w-8 h-8 flex items-center justify-center">
+              <i class="ri-close-line ri-2x"></i>
+            </div>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div>
+            <img id="modalImage" src="" alt="" class="w-full rounded-lg" />
+          </div>
+          <div>
+            <div class="mb-6">
+              <span
+                id="modalCategory"
+                class="px-3 py-1 rounded-full text-sm font-medium"
+              ></span>
+            </div>
+            <p id="modalDescription" class="text-gray-300 mb-6"></p>
+            <div class="mb-6">
+              <h4 class="text-lg font-bold mb-3">Technologies Used</h4>
+              <div id="modalTechnologies" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="mb-6">
+              <h4 class="text-lg font-bold mb-3">Key Features</h4>
+              <ul id="modalFeatures" class="text-gray-300 space-y-2"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="mb-8">
+          <h4 class="text-lg font-bold mb-4">Project Gallery</h4>
+          <div id="modalGallery" class="image-gallery"></div>
+        </div>
+        <div class="mb-8">
+          <h4 class="text-lg font-bold mb-4">Case Study</h4>
+          <div id="modalCaseStudy" class="text-gray-300 space-y-4"></div>
+        </div>
+        <div class="text-center">
+          <button
+            class="bg-accent hover:bg-opacity-90 text-black py-3 px-8 font-medium !rounded-button whitespace-nowrap mr-4"
+          >
+            <div
+              class="w-5 h-5 flex items-center justify-center inline-block mr-2"
+            >
+              <i class="ri-external-link-line"></i>
+            </div>
+            View Live Site
+          </button>
+          <button
+            class="border border-accent text-accent hover:bg-accent hover:text-black transition-colors py-3 px-8 font-medium !rounded-button whitespace-nowrap"
+          >
+            <div
+              class="w-5 h-5 flex items-center justify-center inline-block mr-2"
+            >
+              <i class="ri-github-line"></i>
+            </div>
+            View Code
+          </button>
         </div>
       </div>
-    </article>
-
-    <!-- === Project Card 3 === -->
-    <article class="biome-card group ...">
-      <img src="assets/projects/portfolio-2025-cover.jpg"
-           alt="Personal portfolio 2025 version thumbnail"
-           class="w-full h-60 object-cover" />
-      <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2 tracking-wide">
-          Portfolio&nbsp;2025
-        </h3>
-        <p class="text-sm leading-relaxed opacity-75 mb-4">
-          The site you’re browsing now&mdash;serverless, a11y-first,<br>
-          and hitting 100/100 on Lighthouse.
-        </p>
-
-        <div class="flex flex-wrap gap-2">
-          <span class="badge">SvelteKit</span>
-          <span class="badge">Typescript</span>
-          <span class="badge">Vite</span>
+    </div>
+    <footer class="bg-black py-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center mb-12"
+        >
+          <div class="mb-8 md:mb-0">
+            <h2 class="text-3xl font-['Pacifico'] text-white mb-4">logo</h2>
+            <p class="text-gray-400 max-w-md">
+              Creating digital experiences through innovative design and clean
+              code.
+            </p>
+          </div>
+          <div
+            class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-12"
+          >
+            <div>
+              <h4 class="text-white font-bold mb-4">Services</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Web Design</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >App Development</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Branding</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >UI/UX Design</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-white font-bold mb-4">Work</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Recent Projects</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Case Studies</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Client Testimonials</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white">Process</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-white font-bold mb-4">Connect</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white">About</a>
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white">Blog</a>
+                </li>
+                <li>
+                  <a href="#" class="text-gray-400 hover:text-white"
+                    >Newsletter</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 mb-4 md:mb-0">
+            © 2025 Creative Designer. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white">
+              <div class="w-10 h-10 flex items-center justify-center">
+                <i class="ri-dribbble-line ri-lg"></i>
+              </div>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <div class="w-10 h-10 flex items-center justify-center">
+                <i class="ri-behance-line ri-lg"></i>
+              </div>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <div class="w-10 h-10 flex items-center justify-center">
+                <i class="ri-github-line ri-lg"></i>
+              </div>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <div class="w-10 h-10 flex items-center justify-center">
+                <i class="ri-linkedin-line ri-lg"></i>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-    </article>
+    </footer>
+    <script id="filterScript">
+      const initializeFilters = () => {
+        const filterButtons = document.querySelectorAll(".filter-chip");
+        const projectCards = document.querySelectorAll(".project-card");
+        if (!filterButtons.length || !projectCards.length) return;
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filter = this.getAttribute("data-filter");
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+            projectCards.forEach((card) => {
+              const category = card.getAttribute("data-category");
+              if (filter === "all" || category === filter) {
+                card.style.display = "block";
+                setTimeout(() => {
+                  card.style.opacity = "1";
+                  card.style.transform = "translateY(0)";
+                }, 100);
+              } else {
+                card.style.opacity = "0";
+                card.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                  card.style.display = "none";
+                }, 300);
+              }
+            });
+          });
+        });
+      };
+      document.addEventListener("DOMContentLoaded", initializeFilters);
+    </script>
 
-  </div>
-</section>
 
+    <script id="modalScript">
+      const initializeModal = () => {
+        const modal = document.getElementById("projectModal");
+        const closeModal = document.getElementById("closeModal");
+        const projectCards = document.querySelectorAll(".project-card");
+        if (!modal || !closeModal || !projectCards.length) return;
+        const projectData = {
+          ecommerce: {
+            title: "E-commerce Platform",
+            category: "Web Design",
+            description:
+              "A comprehensive e-commerce solution built with modern technologies, featuring advanced product filtering, seamless checkout process, and responsive design. The platform includes inventory management, order tracking, and integrated payment processing.",
+            technologies: [
+              "React",
+              "Node.js",
+              "Stripe",
+              "MongoDB",
+              "Redux",
+              "Tailwind CSS",
+            ],
+            features: [
+              "Responsive design across all devices",
+              "Advanced product search and filtering",
+              "Secure payment processing with Stripe",
+              "Real-time inventory management",
+              "Order tracking and notifications",
+              "Admin dashboard for store management",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=ecommerce%20homepage%20design%20with%20hero%20section%20and%20featured%20products&width=400&height=300&seq=gal001&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=product%20listing%20page%20with%20filters%20and%20grid%20layout&width=400&height=300&seq=gal002&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=shopping%20cart%20and%20checkout%20process%20interface&width=400&height=300&seq=gal003&orientation=landscape",
+            ],
+            caseStudy: [
+              "The client needed a modern e-commerce platform to replace their outdated system and increase online sales.",
+              "Through user research and competitive analysis, we identified key pain points in the existing shopping experience.",
+              "The new design resulted in a 40% increase in conversion rates and 60% improvement in user engagement metrics.",
+            ],
+          },
+          fitness: {
+            title: "Fitness Tracking App",
+            category: "App Development",
+            description:
+              "Cross-platform mobile application for comprehensive fitness tracking, including workout logging, nutrition monitoring, and progress visualization. Features social elements and personalized coaching recommendations.",
+            technologies: [
+              "React Native",
+              "Firebase",
+              "Redux",
+              "Chart.js",
+              "Expo",
+              "AsyncStorage",
+            ],
+            features: [
+              "Workout tracking with exercise library",
+              "Nutrition logging and calorie counting",
+              "Progress visualization with charts",
+              "Social features and challenges",
+              "Personalized workout recommendations",
+              "Offline data synchronization",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=fitness%20app%20dashboard%20with%20workout%20statistics&width=400&height=300&seq=gal004&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=exercise%20tracking%20interface%20with%20timer%20and%20sets&width=400&height=300&seq=gal005&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=nutrition%20tracking%20screen%20with%20food%20diary&width=400&height=300&seq=gal006&orientation=landscape",
+            ],
+            caseStudy: [
+              "The fitness app market was saturated, requiring a unique approach to stand out from competitors.",
+              "We focused on simplicity and motivation, creating an intuitive interface that encourages daily use.",
+              "The app achieved 50,000+ downloads in the first month and maintains a 4.8-star rating on app stores.",
+            ],
+          },
+          restaurant: {
+            title: "Restaurant Brand Identity",
+            category: "Branding",
+            description:
+              "Complete brand identity design for an upscale dining establishment, including logo design, menu layouts, business cards, signage, and marketing materials. The design reflects elegance and culinary excellence.",
+            technologies: [
+              "Illustrator",
+              "Photoshop",
+              "InDesign",
+              "After Effects",
+              "Figma",
+              "Sketch",
+            ],
+            features: [
+              "Custom logo and brand mark design",
+              "Complete menu design and layout",
+              "Business card and stationery design",
+              "Signage and wayfinding system",
+              "Social media template designs",
+              "Brand guidelines documentation",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=restaurant%20logo%20design%20with%20elegant%20typography&width=400&height=300&seq=gal007&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=restaurant%20menu%20design%20layout%20with%20food%20photography&width=400&height=300&seq=gal008&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=restaurant%20business%20cards%20and%20branding%20materials&width=400&height=300&seq=gal009&orientation=landscape",
+            ],
+            caseStudy: [
+              "The restaurant needed a sophisticated brand identity that would appeal to discerning diners and reflect their culinary philosophy.",
+              "We developed a timeless design language that balances elegance with approachability, using premium materials and refined typography.",
+              "The new brand identity helped the restaurant achieve full bookings within two months of launch and establish itself as a premier dining destination.",
+            ],
+          },
+          dashboard: {
+            title: "Analytics Dashboard",
+            category: "UI/UX",
+            description:
+              "Comprehensive data visualization dashboard designed for business intelligence and analytics. Features real-time data updates, customizable widgets, and intuitive navigation for complex data sets.",
+            technologies: ["Figma", "D3.js", "Vue.js", "Chart.js", "Sass", "Webpack"],
+            features: [
+              "Real-time data visualization",
+              "Customizable dashboard widgets",
+              "Interactive charts and graphs",
+              "Advanced filtering and sorting",
+              "Export functionality for reports",
+              "Responsive design for all devices",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=analytics%20dashboard%20overview%20with%20multiple%20charts&width=400&height=300&seq=gal010&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=data%20visualization%20charts%20and%20graphs%20interface&width=400&height=300&seq=gal011&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=dashboard%20customization%20panel%20and%20widgets&width=400&height=300&seq=gal012&orientation=landscape",
+            ],
+            caseStudy: [
+              "The client struggled with data interpretation across multiple platforms and needed a unified analytics solution.",
+              "We conducted extensive user research to understand how different stakeholders interact with data and designed accordingly.",
+              "The new dashboard reduced report generation time by 75% and improved decision-making speed across the organization.",
+            ],
+          },
+          portfolio: {
+            title: "Creative Portfolio",
+            category: "Web Design",
+            description:
+              "Interactive portfolio website for a digital artist featuring dynamic galleries, smooth animations, and immersive user experience. Built with modern web technologies for optimal performance.",
+            technologies: [
+              "GSAP",
+              "Three.js",
+              "Webflow",
+              "JavaScript",
+              "CSS3",
+              "WebGL",
+            ],
+            features: [
+              "Interactive 3D elements",
+              "Smooth scroll animations",
+              "Dynamic image galleries",
+              "Responsive grid layouts",
+              "Contact form integration",
+              "SEO optimization",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=creative%20portfolio%20homepage%20with%20artistic%20layout&width=400&height=300&seq=gal013&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=portfolio%20gallery%20page%20with%20image%20grid&width=400&height=300&seq=gal014&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=about%20page%20design%20with%20personal%20branding&width=400&height=300&seq=gal015&orientation=landscape",
+            ],
+            caseStudy: [
+              "The artist needed a portfolio that would showcase their work in an engaging and memorable way.",
+              "We created an immersive experience that tells a story through interactive elements and smooth transitions.",
+              "The portfolio helped the artist secure three major client contracts and increased their social media following by 200%.",
+            ],
+          },
+          travel: {
+            title: "Travel Planning App",
+            category: "App Development",
+            description:
+              "Comprehensive travel companion app with itinerary planning, local recommendations, offline maps, and social sharing features. Designed to enhance the travel experience from planning to execution.",
+            technologies: [
+              "Flutter",
+              "Google Maps",
+              "SQLite",
+              "Firebase",
+              "Dart",
+              "REST APIs",
+            ],
+            features: [
+              "Itinerary planning and management",
+              "Local recommendations and reviews",
+              "Offline maps and navigation",
+              "Social sharing and collaboration",
+              "Expense tracking and budgeting",
+              "Multi-language support",
+            ],
+            gallery: [
+              "https://readdy.ai/api/search-image?query=travel%20app%20home%20screen%20with%20destination%20search&width=400&height=300&seq=gal016&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=itinerary%20planning%20interface%20with%20timeline&width=400&height=300&seq=gal017&orientation=landscape",
+              "https://readdy.ai/api/search-image?query=travel%20recommendations%20and%20reviews%20screen&width=400&height=300&seq=gal018&orientation=landscape",
+            ],
+            caseStudy: [
+              "Travelers needed a single app to handle all aspects of trip planning and execution, from research to navigation.",
+              "We integrated multiple APIs and services to provide comprehensive travel information while maintaining offline functionality.",
+              "The app has been downloaded over 100,000 times and maintains a 4.7-star rating with active user engagement.",
+            ],
+          },
+        };
+        projectCards.forEach((card) => {
+          card.addEventListener("click", function () {
+            const projectId = this.getAttribute("data-project");
+            const project = projectData[projectId];
+            if (project) {
+              document.getElementById("modalTitle").textContent = project.title;
+              document.getElementById("modalImage").src =
+                this.querySelector("img").src;
+              document.getElementById("modalImage").alt = project.title;
+              document.getElementById("modalCategory").textContent = project.category;
+              document.getElementById("modalCategory").className =
+                `px-3 py-1 rounded-full text-sm font-medium category-${project.category.toLowerCase().replace(/[^a-z]/g, "")}`;
+              document.getElementById("modalDescription").textContent =
+                project.description;
+              const techContainer = document.getElementById("modalTechnologies");
+              techContainer.innerHTML = "";
+              project.technologies.forEach((tech) => {
+                const span = document.createElement("span");
+                span.className = "tech-tag px-3 py-1 rounded-full text-xs";
+                span.textContent = tech;
+                techContainer.appendChild(span);
+              });
+              const featuresContainer = document.getElementById("modalFeatures");
+              featuresContainer.innerHTML = "";
+              project.features.forEach((feature) => {
+                const li = document.createElement("li");
+                li.innerHTML = `<i class="ri-check-line text-accent mr-2"></i>${feature}`;
+                featuresContainer.appendChild(li);
+              });
+              const galleryContainer = document.getElementById("modalGallery");
+              galleryContainer.innerHTML = "";
+              project.gallery.forEach((imageUrl) => {
+                const div = document.createElement("div");
+                div.className = "gallery-image";
+                div.innerHTML = `<img src="${imageUrl}" alt="Project Gallery" class="w-full h-full object-cover object-top">`;
+                galleryContainer.appendChild(div);
+              });
+              const caseStudyContainer = document.getElementById("modalCaseStudy");
+              caseStudyContainer.innerHTML = "";
+              project.caseStudy.forEach((paragraph) => {
+                const p = document.createElement("p");
+                p.textContent = paragraph;
+                caseStudyContainer.appendChild(p);
+              });
+              modal.classList.add("active");
+              document.body.style.overflow = "hidden";
+            }
+          });
+        });
+        closeModal.addEventListener("click", function () {
+          modal.classList.remove("active");
+          document.body.style.overflow = "auto";
+        });
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+          }
+        });
+      };
+      document.addEventListener("DOMContentLoaded", initializeModal);
+    </script>
 <!-- /Skills & Expertise Section -->
 
     <!-- Weather & Climate Section -->
@@ -1075,6 +1917,28 @@
             updateParticleAmount(this.value);
           });
         }
+
+      const initializeAnimations = () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("fade-in-up");
+            }
+          });
+        }, observerOptions);
+        const animatedElements = document.querySelectorAll(
+          ".project-card, .fade-in-up",
+        );
+        animatedElements.forEach((el) => {
+          observer.observe(el);
+        });
+      };
+      document.addEventListener("DOMContentLoaded", initializeModal);
         const weatherSlider = document.querySelector(".weather-slider");
         const weatherContainer = document.querySelector(".weather-container");
         const clouds = document.querySelectorAll(".cloud");
@@ -1174,11 +2038,13 @@
           });
         }, observerOptions);
         // Observe all sections
-        sections = document.querySelectorAll(".section");
+        const sections = document.querySelectorAll(".section");
         sections.forEach((section) => {
           observer.observe(section);
         });
       });
+
+
     </script>
   </body>
 </html>
