@@ -568,14 +568,14 @@
       gap: 1rem;
       }
       .gallery-image {
-      aspect-ratio: 16/9;
+      aspect-ratio: auto;
       border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s ease;
       }
       .gallery-image:hover {
-       /* transform: scale(1.05);*/
+       transform: scale(1.05);
       }
 
 
@@ -1327,7 +1327,6 @@ project.gallery.forEach((item, idx) => {
 
   const a = document.createElement("a");
   a.href = src;                          // 大图地址
-  a.setAttribute("data-lg-size", "1600-900"); // 可按需要改真实分辨率
   a.setAttribute("data-sub-html", `<h4>${title}</h4>`); // 标题
   a.innerHTML = `
     <img src="${src}"
@@ -1374,7 +1373,7 @@ lgInstance = lightGallery(galleryContainer, {
     </script>
 <!-- /Skills & Expertise Section -->
  
-    <!-- Rivers & Landforms Section -->
+    <!-- aboutme Section -->
     <section id="aboutme" class="section">
       <div
         class="section-background"
@@ -1383,71 +1382,82 @@ lgInstance = lightGallery(galleryContainer, {
       <div class="overlay"></div>
       <div class="section-content max-w-7xl mx-auto px-6 py-24 w-full">
         <h2 class="text-4xl md:text-5xl font-bold mb-16 ml-0 md:ml-12">
-          Rivers & Landforms
+          Über Mich
         </h2>
-        <div class="flex flex-col lg:flex-row items-center justify-between">
-          <div class="lg:w-1/2 mb-12 lg:mb-0 pr-0 lg:pr-12">
-            <h3 class="text-3xl font-bold mb-4">
-              Water's Transformative Power
-            </h3>
-            <p class="text-gray-300 mb-6">
-              Rivers are Earth's sculptors, carving valleys, creating deltas,
-              and transporting sediments that build new landforms over
-              geological time.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">Erosion</h5>
-                <p class="text-sm text-gray-300">
-                  The Grand Canyon took 5-6 million years to form through water
-                  erosion
-                </p>
-              </div>
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">Deposition</h5>
-                <p class="text-sm text-gray-300">
-                  The Mississippi River Delta grows by 80 million tons of
-                  sediment annually
-                </p>
-              </div>
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">Watersheds</h5>
-                <p class="text-sm text-gray-300">
-                  The Amazon Basin covers over 7 million square kilometers
-                </p>
-              </div>
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">River Systems</h5>
-                <p class="text-sm text-gray-300">
-                  Rivers follow predictable patterns from source to mouth
-                </p>
-              </div>
-            </div>
-            <button
-              class="cta-button bg-primary hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
-            >
-              Explore Major Rivers
-            </button>
-          </div>
-          <div class="lg:w-1/2">
-            <div class="relative h-96 rounded-lg overflow-hidden">
-              <img
-                src="https://readdy.ai/api/search-image?query=cross-section%2520view%2520of%2520river%2520valley%2520showing%2520layers%2520of%2520rock%2520and%2520soil%252C%2520water%2520flow%2520patterns%252C%2520erosion%2520processes%252C%2520and%2520sediment%2520deposition%252C%2520photorealistic%2520scientific%2520visualization&width=800&height=600&seq=erosion909&orientation=portrait"
-                alt="River Valley Cross-section"
-                class="w-full h-full object-cover object-top"
-              />
-              <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6"
-              >
-                <h4 class="text-xl font-bold mb-2">River Valley Formation</h4>
-                <p class="text-sm text-gray-300">
-                  Rivers shape landscapes through four main processes: erosion,
-                  transportation, deposition, and weathering.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+ <div class="flex flex-col lg:flex-row items-start justify-between gap-12">
+  <!-- 左栏 -->
+  <div class="lg:w-1/2 mb-12 lg:mb-0 pr-0 lg:pr-12">
+    <p class="text-gray-300 mb-6 max-w-md">
+      Maschinenbau‑Ingenieurin mit Fokus Automatisierung …
+    </p>
+
+    <ul class="flex flex-wrap gap-3 mb-6 text-sm">
+      <li class="px-3 py-1 bg-primary/20 rounded-full">Python</li>
+      <li class="px-3 py-1 bg-primary/20 rounded-full">SolidWorks</li>
+      <li class="px-3 py-1 bg-primary/20 rounded-full">CATIA V5</li>
+      <li class="px-3 py-1 bg-primary/20 rounded-full">Fusion 360</li>
+    </ul>
+
+    <div class="grid grid-cols-2 gap-4 mb-8 w-full max-w-md">
+    <div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <p class="text-3xl font-bold leading-none">6+</p>
+      <span class="text-xs text-gray-400">Projektmanaement</span>
+    </div>
+    <div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <p class="text-3xl font-bold leading-none">3</p>
+      <span class="text-xs text-gray-400">Sprachen (DE · EN · ZH)</span>
+    </div>
+    <div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <p class="text-3xl font-bold leading-none">1</p>
+      <span class="text-xs text-gray-400">TÜV QMF‑Zertifikat</span>
+    </div>
+    <div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <p class="text-3xl font-bold leading-none">2&nbsp;J.</p>
+      <span class="text-xs text-gray-400">Entwicklungs­erfahrung</span>
+    </div>
+  </div>
+</div>
+  <div class="lg:w-1/2">
+    <div class="relative">
+  <!-- vertical line：改成渐变半透明 -->
+  <span class="pointer-events-none absolute left-3 top-0 h-full w-px bg-gradient-to-b from-accent/80 via-accent/40 to-transparent"></span>
+
+  <ul class="ml-8 space-y-10">
+    <!-- Item -->
+    <li class="relative">
+      <!-- dot：外层定位容器 + 内层渐变圆环 -->
+<div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <h4 class="mb-1 text-lg font-semibold">Werkstudent – IAV GmbH</h4>
+      <span class="font-mono text-sm text-accent/90">2024 &ndash; Heute</span>
+      <p class="mt-1 text-sm text-gray-300">Entwickler · Prozessdigitalisierung</p>
+    </div></li>
+
+    <!-- 其余条目同理 ↓  -->
+    <li class="relative">
+<div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <h4 class="mb-1 text-lg font-semibold">Praktikum – VW Nutzfahrzeug</h4>
+      <span class="font-mono text-sm text-accent/90">2023</span>
+      <p class="mt-1 text-sm text-gray-300">Schwerpunkt E‑Mobilität</p>
+  </div>  </li>
+
+    <li class="relative">
+<div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <h4 class="mb-1 text-lg font-semibold">Master&nbsp;Studium – TU Berlin</h4>
+      <span class="font-mono text-sm text-accent/90">2022&ndash; 2025</span>
+      <p class="mt-1 text-sm text-gray-300">Produktionstechnik</p>
+  </div>   </li>
+
+    <li class="relative">
+<div class="bg-black bg-opacity-50 p-4 rounded-lg">
+      <h4 class="mb-1 text-lg font-semibold">Bachelor – Hefei Hochschule Anhalt</h4>
+      <span class="font-mono text-sm text-accent/90">2016&ndash; 2022</span>
+      <p class="mt-1 text-sm text-gray-300">Maschinenbau</p>
+  </div>  
+</li>
+  </ul>
+</div>
+</div>
+</div>
 
  <div class="flex justify-center gap-6 mt-16">
   <!-- 向上：返回首页 -->
@@ -1499,33 +1509,35 @@ lgInstance = lightGallery(galleryContainer, {
             <div
               class="w-16 h-16 flex items-center justify-center mx-auto mb-4"
             >
-              <i class="ri-book-open-line ri-2x"></i>
+              <i class=" ri-share-line ri-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2">Linkedin</h3>
             <p class="text-gray-300">
-              Access our comprehensive library of educational resources.
+              <a href="www.linkedin.com/in/hui-wang-8629b21b2"
+                    >Hui Wang</a
+                  >
             </p>
           </div>
           <div class="bg-black bg-opacity-50 p-6 rounded-lg">
             <div
               class="w-16 h-16 flex items-center justify-center mx-auto mb-4"
             >
-              <i class="ri-team-line ri-2x"></i>
+              <i class="ri-book-open-line ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold mb-2">Get Involved</h3>
+            <h3 class="text-xl font-bold mb-2">E-Mail</h3>
             <p class="text-gray-300">
-              Join community projects and citizen science initiatives.
+              huiw1118@gmail.com
             </p>
           </div>
           <div class="bg-black bg-opacity-50 p-6 rounded-lg">
             <div
               class="w-16 h-16 flex items-center justify-center mx-auto mb-4"
             >
-              <i class="ri-share-line ri-2x"></i>
+              <i class="ri-team-line ri-2x "></i>
             </div>
-            <h3 class="text-xl font-bold mb-2">Spread the Word</h3>
+            <h3 class="text-xl font-bold mb-2">Wohnsitz</h3>
             <p class="text-gray-300">
-              Share knowledge and inspire others to learn about our planet.
+              Berlin
             </p>
           </div>
         </div>
@@ -1618,7 +1630,7 @@ lgInstance = lightGallery(galleryContainer, {
           class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <p class="text-gray-500 mb-4 md:mb-0">
-            © 2025 Earth Explorer. All rights reserved.
+            © 2025 IuHgnaW. All rights reserved.
           </p>
           <div class="flex space-x-6">
             <a href="#" class="text-gray-400 hover:text-white">
