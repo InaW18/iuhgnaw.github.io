@@ -52,6 +52,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
+    <link rel="stylesheet"
+      href="https://unpkg.com/lightgallery@2.7.1/css/lightgallery-bundle.min.css">
+<script src="https://unpkg.com/lightgallery@2.7.1/lightgallery.umd.js"></script>
+<script src="https://unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.umd.js"></script>
+
     <style>
       :where([class^="ri-"])::before { content: "\f3c2"; }
       .section-background {
@@ -590,7 +595,7 @@
     <nav class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex justify-between items-center h-20">
-          <a href="#" class="text-2xl font-['Pacifico'] text-white">logo</a>
+          <a href="#" class="text-2xl font-['Pacifico'] text-white">Hui Wang</a>
           <div class="hidden md:flex space-x-8">
             <a
               href="#hero"
@@ -600,17 +605,17 @@
             <a
               href="#projects"
               class="text-white hover:text-accent transition-colors"
-              >Projekt</a
+              >Project</a
             >
             <a
-              href="#about"
+              href="#aboutme"
               class="text-white hover:text-accent transition-colors"
               >About Me</a
             >
             <a
-              href="#kontakt"
+              href="#contact"
               class="text-white hover:text-accent transition-colors"
-              >Kontakt</a
+              >Contact</a
             >
           </div>
           <button class="md:hidden text-white">
@@ -645,7 +650,7 @@
                               <button
                                 class="cta-button bg-accent hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
                               >
-                  <a href="#projects" class="btn-primary">View Projects</a>
+                  <a href="#projects" class="text-white hover:text-accent transition-colors">View Projects</a>
                 </button>
 <button
                                 class="cta-button bg-accent hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium !rounded-button whitespace-nowrap"
@@ -658,9 +663,9 @@
         </div>
       </div>
     </section>
-<!-- ===== Biomes Section 改造为 Projects Section ===== -->
-  <!-- ===== Projects Section (原 Biomes) ===== -->
-    <section class="min-h-screen pt-32 pb-16">
+
+<!-- ===== Projects Section (原 Biomes) ===== -->
+    <section id="projects" class="min-h-screen pt-32 pb-16">
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16 fade-in-up">
           <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
@@ -968,7 +973,7 @@
 
   <!-- 向下：继续查看 -->
 <a
-  href="#weather"                 
+  href="#aboutme"                 
   class="bg-primary hover:bg-opacity-90 text-white w-14 h-14 flex items-center
            justify-center text-2xl !rounded-full transition"
   aria-label="Scroll Down"
@@ -1085,6 +1090,7 @@
 
 
     <script id="modalScript">
+      let lgInstance = null;  
       const initializeModal = () => {
         const modal = document.getElementById("projectModal");
         const closeModal = document.getElementById("closeModal");
@@ -1112,11 +1118,14 @@
               "Order tracking and notifications",
               "Admin dashboard for store management",
             ],
-            gallery: [
-              "https://readdy.ai/api/search-image?query=ecommerce%20homepage%20design%20with%20hero%20section%20and%20featured%20products&width=400&height=300&seq=gal001&orientation=landscape",
-              "https://readdy.ai/api/search-image?query=product%20listing%20page%20with%20filters%20and%20grid%20layout&width=400&height=300&seq=gal002&orientation=landscape",
-              "https://readdy.ai/api/search-image?query=shopping%20cart%20and%20checkout%20process%20interface&width=400&height=300&seq=gal003&orientation=landscape",
-            ],
+// 允许两种写法：
+// ① 旧写法（字符串） ② 新写法（对象包含 src + title）
+gallery: [
+  { src: "/assets/crp-main.png",  title: "Dashboard Übersicht" },
+  { src: "/assets/crp-form.png",  title: "Formular­screen" },
+  { src: "/assets/crp-clone.png", title: "Clone‑Workflow" }
+],
+
             caseStudy: [
               "The client needed a modern e-commerce platform to replace their outdated system and increase online sales.",
               "Through user research and competitive analysis, we identified key pain points in the existing shopping experience.",
@@ -1308,12 +1317,35 @@
               });
               const galleryContainer = document.getElementById("modalGallery");
               galleryContainer.innerHTML = "";
-              project.gallery.forEach((imageUrl) => {
-                const div = document.createElement("div");
-                div.className = "gallery-image";
-                div.innerHTML = `<img src="${imageUrl}" alt="Project Gallery" class="w-full h-full object-cover object-top">`;
-                galleryContainer.appendChild(div);
-              });
+// 如果之前有 lightGallery 实例，先销毁，避免重复绑定
+if (lgInstance) { lgInstance.destroy(); lgInstance = null; }
+
+project.gallery.forEach((item, idx) => {
+  const src   = typeof item === "string" ? item : item.src;
+  const title = typeof item === "string" ? project.title + " Bild " + (idx+1) : item.title;
+
+  const a = document.createElement("a");
+  a.href = src;                          // 大图地址
+  a.setAttribute("data-lg-size", "1600-900"); // 可按需要改真实分辨率
+  a.setAttribute("data-sub-html", `<h4>${title}</h4>`); // 标题
+  a.innerHTML = `
+    <img src="${src}"
+         alt="${title}"
+         class="w-full h-full object-cover rounded-lg" />
+  `;
+
+  galleryContainer.appendChild(a);
+});
+
+// 初始化 lightGallery
+lgInstance = lightGallery(galleryContainer, {
+  selector: "a",
+  plugins: [lgZoom],
+  speed: 300,
+  download: false          // 关闭下载按钮（可选）
+});
+
+
               const caseStudyContainer = document.getElementById("modalCaseStudy");
               caseStudyContainer.innerHTML = "";
               project.caseStudy.forEach((paragraph) => {
@@ -1340,137 +1372,12 @@
       document.addEventListener("DOMContentLoaded", initializeModal);
     </script>
 <!-- /Skills & Expertise Section -->
-
-    <!-- Weather & Climate Section -->
-    <section id="weather" class="section">
+ 
+    <!-- Rivers & Landforms Section -->
+    <section id="aboutme" class="section">
       <div
         class="section-background"
         style="background-image: url('https://readdy.ai/api/search-image?query=dramatic%2520weather%2520landscape%2520showing%2520transition%2520from%2520stormy%2520dark%2520clouds%2520to%2520clear%2520sunny%2520sky%252C%2520with%2520rain%2520falling%2520in%2520distance%252C%2520sunlight%2520breaking%2520through%2520clouds%252C%2520photorealistic%2520cinematic%2520quality&width=1920&height=1080&seq=weather606&orientation=landscape');"
-      ></div>
-      <div class="overlay"></div>
-      <div class="section-content max-w-7xl mx-auto px-6 py-24 w-full">
-        <h2 class="text-4xl md:text-5xl font-bold mb-16 ml-0 md:ml-12">
-          Weather & Climate
-        </h2>
-        <div class="flex flex-col lg:flex-row items-center justify-between">
-          <div class="lg:w-1/2 mb-12 lg:mb-0 pr-0 lg:pr-12">
-            <h3 class="text-3xl font-bold mb-4">Atmospheric Systems</h3>
-            <p class="text-gray-300 mb-6">
-              Earth's atmosphere is a complex system of gases, water vapor, and
-              particles that create our daily weather and long-term climate
-              patterns.
-            </p>
-            <div
-              class="weather-container bg-black bg-opacity-50 p-6 rounded-lg"
-            >
-              <div class="relative h-[200px] mb-4 overflow-hidden">
-                <div
-                  class="absolute inset-0 bg-gradient-to-br from-sky-400/20 to-transparent transition-opacity duration-500"
-                ></div>
-                <div
-                  class="cloud"
-                  style="width: 120px; height: 60px; top: 30px; left: 20px; background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.3)); border-radius: 30px; filter: blur(8px); position: absolute; transition: all 0.5s ease;"
-                ></div>
-                <div
-                  class="cloud"
-                  style="width: 160px; height: 80px; top: 60px; left: 100px; background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.2)); border-radius: 40px; filter: blur(10px); position: absolute; transition: all 0.5s ease;"
-                ></div>
-                <div
-                  class="cloud"
-                  style="width: 200px; height: 100px; top: 40px; left: 180px; background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.1)); border-radius: 50px; filter: blur(12px); position: absolute; transition: all 0.5s ease;"
-                ></div>
-                <div
-                  class="absolute top-2 left-2 bg-black/40 px-3 py-1 rounded text-sm"
-                >
-                  Weather Conditions
-                </div>
-              </div>
-              <div class="absolute bottom-6 left-6 right-6">
-                <div class="flex justify-between items-center mb-3">
-                  <div class="flex items-center">
-                    <i class="ri-thunderstorms-line ri-lg mr-2"></i>
-                    <span class="text-sm">Storm</span>
-                  </div>
-                  <div class="flex items-center">
-                    <i class="ri-sun-line ri-lg mr-2"></i>
-                    <span class="text-sm">Clear</span>
-                  </div>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="100"
-                  value="1"
-                  class="weather-slider"
-                />
-                <div class="text-sm text-gray-400 mt-4">
-                  <i class="ri-information-line ri-lg align-bottom mr-1"></i>
-                  The white circles represent clouds that form and dissipate as
-                  weather conditions change. Move the slider to see how they
-                  respond.
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-6 mt-8">
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">Global Circulation</h5>
-                <p class="text-sm text-gray-300">
-                  Six major cells transport heat from equator to poles
-                </p>
-              </div>
-              <div class="bg-black bg-opacity-50 p-4 rounded-lg">
-                <h5 class="font-bold mb-2">Coriolis Effect</h5>
-                <p class="text-sm text-gray-300">
-                  Earth's rotation deflects air currents and ocean currents
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="lg:w-1/2">
-            <div class="bg-black bg-opacity-50 p-6 rounded-lg mt-24">
-              <h4 class="text-xl font-bold mb-4">Climate Zones</h4>
-              <div class="h-64 mb-6 rounded overflow-hidden">
-                <img
-                  src="https://readdy.ai/api/search-image?query=world%2520map%2520showing%2520climate%2520zones%2520with%2520color%2520coding%2520for%2520different%2520climate%2520types%252C%2520from%2520polar%2520to%2520tropical%252C%2520with%2520subtle%2520gradient%2520transitions%2520between%2520zones%252C%2520photorealistic%2520scientific%2520visualization&width=800&height=500&seq=climate707&orientation=landscape"
-                  alt="Climate Zones"
-                  class="w-full h-full object-cover object-top"
-                />
-              </div>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center">
-                  <div class="w-4 h-4 bg-oceanBlue mr-2"></div>
-                  <span class="text-sm">Polar</span>
-                </div>
-                <div class="flex items-center">
-                  <div class="w-4 h-4 bg-primary mr-2"></div>
-                  <span class="text-sm">Temperate</span>
-                </div>
-                <div class="flex items-center">
-                  <div class="w-4 h-4 bg-lavaRed mr-2"></div>
-                  <span class="text-sm">Tropical</span>
-                </div>
-                <div class="flex items-center">
-                  <div class="w-4 h-4 bg-secondary mr-2"></div>
-                  <span class="text-sm">Arid</span>
-                </div>
-              </div>
-              <div class="mt-6">
-                <p class="text-sm text-gray-300">
-                  Climate zones are determined by temperature, precipitation,
-                  and seasonal patterns. They influence biodiversity, human
-                  settlement, and agricultural practices.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Rivers & Landforms Section -->
-    <section id="rivers" class="section">
-      <div
-        class="section-background"
-        style="background-image: url('https://readdy.ai/api/search-image?query=dramatic%2520river%2520valley%2520landscape%2520with%2520winding%2520river%2520cutting%2520through%2520mountains%252C%2520showing%2520erosion%2520patterns%252C%2520steep%2520canyon%2520walls%252C%2520and%2520diverse%2520terrain%252C%2520photorealistic%2520cinematic%2520quality&width=1920&height=1080&seq=rivers808&orientation=landscape');"
       ></div>
       <div class="overlay"></div>
       <div class="section-content max-w-7xl mx-auto px-6 py-24 w-full">
@@ -1540,17 +1447,42 @@
             </div>
           </div>
         </div>
+
+ <div class="flex justify-center gap-6 mt-16">
+  <!-- 向上：返回首页 -->
+  <a
+    href="#projects"
+    data-readdy="true"
+    class="bg-primary hover:bg-opacity-90 text-white w-14 h-14 flex items-center
+           justify-center text-2xl !rounded-full transition"
+    aria-label="Back to Home"
+  >
+    <i class="ri-arrow-up-line"></i>
+  </a>
+
+  <!-- 向下：继续查看 -->
+<a
+  href="#contact"                 
+  class="bg-primary hover:bg-opacity-90 text-white w-14 h-14 flex items-center
+           justify-center text-2xl !rounded-full transition"
+  aria-label="Scroll Down"
+>
+  <i class="ri-arrow-down-line"></i>
+</a>
+
+</div>
+
       </div>
     </section>
     <!-- Mission Section -->
-    <section id="mission" class="section flex items-center justify-center">
+    <section id="contact" class="section flex items-center justify-center">
       <div
         class="section-background"
         style="background-image: url('https://readdy.ai/api/search-image?query=panoramic%2520view%2520of%2520Earth%2520from%2520space%2520showing%2520the%2520blue%2520planet%2520with%2520cloud%2520formations%252C%2520continents%2520visible%252C%2520against%2520the%2520black%2520void%2520of%2520space%252C%2520stars%2520visible%2520in%2520background%252C%2520photorealistic%2520cinematic%2520quality&width=1920&height=1080&seq=earth010&orientation=landscape');"
       ></div>
       <div class="overlay bg-black bg-opacity-60"></div>
       <div class="section-content max-w-7xl mx-auto px-6 w-full text-center">
-        <h2 class="text-4xl md:text-6xl font-bold mb-8">Join the Mission</h2>
+        <h2 class="text-4xl md:text-6xl font-bold mb-8">Contect</h2>
         <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12 text-gray-200">
           Our planet is a complex, interconnected system that needs our
           understanding and protection. The knowledge you gain is the first step
@@ -1559,7 +1491,7 @@
         <button
           class="cta-button bg-primary hover:bg-opacity-90 text-white py-4 px-8 text-lg font-medium mb-12 !rounded-button whitespace-nowrap"
         >
-          Protect What You Learn
+          
         </button>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div class="bg-black bg-opacity-50 p-6 rounded-lg">
@@ -1568,7 +1500,7 @@
             >
               <i class="ri-book-open-line ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold mb-2">Learn More</h3>
+            <h3 class="text-xl font-bold mb-2">Linkedin</h3>
             <p class="text-gray-300">
               Access our comprehensive library of educational resources.
             </p>
@@ -1605,7 +1537,7 @@
           class="flex flex-col md:flex-row justify-between items-center mb-12"
         >
           <div class="mb-8 md:mb-0">
-            <h2 class="text-3xl font-['Pacifico'] text-white mb-4">logo</h2>
+            <h2 class="text-3xl font-['Pacifico'] text-white mb-4">Hui Wang</h2>
             <p class="text-gray-400 max-w-md">
               Exploring and understanding Earth's systems through immersive
               education.
